@@ -23,7 +23,6 @@ export interface EmotionData {
   };
   
   export const apiService = {
-    // Fungsi untuk menganalisis teks
     analyzeText: async (_text: string): Promise<AnalysisResult> => {
       try {
         // const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ANALYZE}`, {
@@ -33,10 +32,9 @@ export interface EmotionData {
         //   },
         //   body: JSON.stringify({ text })
         // });
-        // const data = await response.json();
-        // return data;
+        // return await response.json();
         
-        // MOCK DATA - Ganti dengan API call yang sebenarnya
+        // MOCK DATA
         return new Promise((resolve) => {
           setTimeout(() => {
             resolve({
@@ -48,10 +46,10 @@ export interface EmotionData {
                 cinta: 0,
                 netral: 20
               },
-              depressionLevel: 'moderate',
-              message: 'Merasa sedih, hampa, atau kesepian adalah hal yang manusiawi dan bisa dialami siapa pun...'
+              depressionLevel: 'moderat',
+              message: 'Merasa sedih, hampa, atau kesepian adalah hal yang manusiawi dan bisa dialami siapa pun. Namun, jika perasaan tersebut berlangsung cukup lama atau mulai memengaruhi aktivitas sehari-hari, penting untuk memberikan perhatian lebih terhadap kondisi emosional diri sendiri.'
             });
-          }, 1000);
+          }, 1500);
         });
       } catch (error) {
         console.error('Error analyzing text:', error);
@@ -59,21 +57,17 @@ export interface EmotionData {
       }
     },
   
-    // Fungsi untuk mendapatkan hasil sebelumnya
     getResults: async (_userId?: string) => {
       try {
         // const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_RESULTS}?userId=${userId}`);
-        // const data = await response.json();
-        // return data;
-        
-        return null; // MOCK - Ganti dengan API call
+        // return await response.json();
+        return null;
       } catch (error) {
         console.error('Error fetching results:', error);
         throw error;
       }
     },
   
-    // Fungsi untuk menyimpan feedback
     saveFeedback: async (_feedbackData: unknown) => {
       try {
         // const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.SAVE_FEEDBACK}`, {
@@ -83,9 +77,8 @@ export interface EmotionData {
         //   },
         //   body: JSON.stringify(feedbackData)
         // });
-        // return response.json();
-        
-        return { success: true }; // MOCK - Ganti dengan API call
+        // return await response.json();
+        return { success: true };
       } catch (error) {
         console.error('Error saving feedback:', error);
         throw error;
