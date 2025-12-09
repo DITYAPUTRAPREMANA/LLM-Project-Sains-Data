@@ -8,9 +8,7 @@ interface EmotionalDisplayProps {
 }
 
 export const EmotionalDisplay: React.FC<EmotionalDisplayProps> = ({
-  emotions,
-  depressionLevel,
-  message
+  emotions
 }) => {
   const getEmotionConfig = (emotion: string) => {
     const configs: Record<string, { color: string; gradient: string }> = {
@@ -79,32 +77,6 @@ export const EmotionalDisplay: React.FC<EmotionalDisplayProps> = ({
               </div>
             );
           })}
-        </div>
-      </div>
-
-      {/* Analysis Message */}
-      <div className="space-y-4 bg-slate-700/30 backdrop-blur-sm rounded-xl p-6 border border-slate-600/30 shadow-xl">
-        <div className="flex items-start gap-3">
-          <div className="w-1 h-full bg-gradient-to-b from-purple-500 to-indigo-500 rounded-full"></div>
-          <div className="flex-1 space-y-4">
-            <p className="text-white text-sm leading-relaxed">
-              Berdasarkan hasil analisis yang telah saya lakukan, kalimat tersebut menunjukkan adanya indikasi depresi pada tingkat{' '}
-              <span className="font-bold text-purple-300 bg-purple-900/30 px-2 py-0.5 rounded">
-                {depressionLevel}
-              </span>.
-            </p>
-            <p className="text-slate-200 text-sm leading-relaxed">
-              {message}
-            </p>
-            <p className="text-slate-200 text-sm leading-relaxed">
-              Cobalah untuk berbagi cerita dengan orang yang dipercaya, melakukan aktivitas kecil yang menyenangkan, seperti berjalan santai, mendengarkan musik, atau menulis jurnal perasaan. Hal-hal sederhana ini dapat membantu meredakan beban pikiran dan memberi ruang bagi diri untuk pulih perlahan.
-            </p>
-            <div className="bg-indigo-900/30 border border-indigo-500/30 rounded-lg p-4 mt-4">
-              <p className="text-indigo-200 text-sm leading-relaxed">
-                💡 <span className="font-semibold">Saran:</span> Jika perasaan tertekan terus berlanjut, jangan ragu untuk mencari bantuan profesional, seperti konselor, psikolog, atau terapis.
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </div>

@@ -10,7 +10,6 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Add custom animations
     const style = document.createElement('style');
     style.textContent = `
       @keyframes fadeIn {
@@ -76,7 +75,7 @@ const App: React.FC = () => {
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">
-                BUBADIBAKO
+                MINDSENSE
               </h1>
               <p className="text-slate-400 text-sm mt-1">Depression detection system</p>
             </div>
@@ -110,13 +109,6 @@ const App: React.FC = () => {
               </p>
             </div>
           )}
-        </div>
-
-        {/* Footer */}
-        <div className="mt-6 text-center">
-          <p className="text-slate-500 text-xs">
-            Sistem ini menggunakan AI untuk menganalisis emosi. Hasil analisis bersifat informatif dan tidak menggantikan konsultasi profesional.
-          </p>
         </div>
       </div>
     </div>
