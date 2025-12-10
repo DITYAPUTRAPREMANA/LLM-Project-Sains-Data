@@ -1,87 +1,104 @@
 export interface EmotionData {
-    marah: number;
-    sedih: number;
-    takut: number;
-    senang: number;
-    cinta: number;
-    netral: number;
-  }
-  
-  export interface AnalysisResult {
-    emotions: EmotionData;
-    depressionLevel: string;
-    message: string;
-  }
-  
-  export const API_CONFIG = {
-    BASE_URL: 'https://your-api-url.com/api',
-    ENDPOINTS: {
-      ANALYZE: '/analyze',
-      GET_RESULTS: '/results',
-      SAVE_FEEDBACK: '/feedback'
-    }
+  marah: number;
+  sedih: number;
+  takut: number;
+  senang: number;
+  cinta: number;
+  netral: number;
+}
+
+export interface AnalysisResult {
+  emotions: EmotionData;
+  depressionLevel: string;
+}
+
+// API Response structure from the server
+interface APIResponse {
+  input: string;
+  predicted_emotion: string;
+  probabilities: {
+    anger: number;
+    sadness: number;
+    joy: number;
+    fear: number;
+    love: number;
+    neutral: number;
   };
+}
+
+export const API_CONFIG = {
+  // Use proxy in development to avoid CORS issues
+  BASE_URL: '/api',
+  ENDPOINTS: {
+    PREDICT: '/predict',
+  }
+};
+
+// Helper function to determine depression level based on emotions
+const calculateDepressionLevel = (probabilities: APIResponse['probabilities']): string => {
+  const negativeScore = probabilities.sadness + probabilities.anger + probabilities.fear;
+  const positiveScore = probabilities.joy + probabilities.love;
   
-  export const apiService = {
-    analyzeText: async (_text: string): Promise<AnalysisResult> => {
-      try {
-        // const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ANALYZE}`, {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        //   body: JSON.stringify({ text })
-        // });
-        // return await response.json();
-        
-        // MOCK DATA
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve({
-              emotions: {
-                marah: 30,
-                sedih: 70,
-                takut: 30,
-                senang: 5,
-                cinta: 0,
-                netral: 20
-              },
-              depressionLevel: 'moderat',
-              message: 'Merasa sedih, hampa, atau kesepian adalah hal yang manusiawi dan bisa dialami siapa pun. Namun, jika perasaan tersebut berlangsung cukup lama atau mulai memengaruhi aktivitas sehari-hari, penting untuk memberikan perhatian lebih terhadap kondisi emosional diri sendiri.'
-            });
-          }, 1500);
-        });
-      } catch (error) {
-        console.error('Error analyzing text:', error);
-        throw error;
+  if (negativeScore > 60) return 'tinggi';
+  if (negativeScore > 30 && negativeScore > positiveScore) return 'moderat';
+  return 'rendah';
+};
+export const apiService = {
+  analyzeText: async (text: string): Promise<AnalysisResult> => {
+    try {
+      const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.PREDICT}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    },
-  
-    getResults: async (_userId?: string) => {
-      try {
-        // const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_RESULTS}?userId=${userId}`);
-        // return await response.json();
-        return null;
-      } catch (error) {
-        console.error('Error fetching results:', error);
-        throw error;
-      }
-    },
-  
-    saveFeedback: async (_feedbackData: unknown) => {
-      try {
-        // const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.SAVE_FEEDBACK}`, {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        //   body: JSON.stringify(feedbackData)
-        // });
-        // return await response.json();
-        return { success: true };
-      } catch (error) {
-        console.error('Error saving feedback:', error);
-        throw error;
-      }
+
+      const data: APIResponse = await response.json();
+      
+      // Map English emotion names to Indonesian
+      const emotions: EmotionData = {
+        marah: Math.round(data.probabilities.anger * 100) / 100,
+        sedih: Math.round(data.probabilities.sadness * 100) / 100,
+        takut: Math.round(data.probabilities.fear * 100) / 100,
+        senang: Math.round(data.probabilities.joy * 100) / 100,
+        cinta: Math.round(data.probabilities.love * 100) / 100,
+        netral: Math.round(data.probabilities.neutral * 100) / 100
+      };
+      
+      const depressionLevel = calculateDepressionLevel(data.probabilities);
+      
+      return {
+        emotions,
+        depressionLevel,
+      };
+    } catch (error) {
+      console.error('Error analyzing text:', error);
+      throw error;
     }
-  };
+  },
+
+  getResults: async (_userId?: string) => {
+    try {
+      // Endpoint belum tersedia
+      return null;
+    } catch (error) {
+      console.error('Error fetching results:', error);
+      throw error;
+    }
+  },
+
+  saveFeedback: async (_feedbackData: unknown) => {
+    try {
+      // Endpoint belum tersedia
+      return { success: true };
+    } catch (error) {
+      console.error('Error saving feedback:', error);
+      throw error;
+    }
+  }
+};

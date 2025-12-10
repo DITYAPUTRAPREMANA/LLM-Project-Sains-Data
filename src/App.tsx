@@ -95,7 +95,6 @@ const App: React.FC = () => {
             <EmotionalDisplay
               emotions={analysisResult.emotions}
               depressionLevel={analysisResult.depressionLevel}
-              message={analysisResult.message}
             />
           )}
 

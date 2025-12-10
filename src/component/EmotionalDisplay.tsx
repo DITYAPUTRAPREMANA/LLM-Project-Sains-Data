@@ -4,7 +4,6 @@ import type { EmotionData } from '../services/APIservice';
 interface EmotionalDisplayProps {
   emotions: EmotionData;
   depressionLevel: string;
-  message: string;
 }
 
 export const EmotionalDisplay: React.FC<EmotionalDisplayProps> = ({
