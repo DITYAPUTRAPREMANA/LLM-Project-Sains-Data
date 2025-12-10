@@ -12,7 +12,6 @@ export interface AnalysisResult {
   depressionLevel: string;
 }
 
-// API Response structure from the server
 interface APIResponse {
   input: string;
   predicted_emotion: string;
@@ -27,14 +26,12 @@ interface APIResponse {
 }
 
 export const API_CONFIG = {
-  // Use proxy in development to avoid CORS issues
   BASE_URL: '/api',
   ENDPOINTS: {
     PREDICT: '/predict',
   }
 };
 
-// Helper function to determine depression level based on emotions
 const calculateDepressionLevel = (probabilities: APIResponse['probabilities']): string => {
   const negativeScore = probabilities.sadness + probabilities.anger + probabilities.fear;
   const positiveScore = probabilities.joy + probabilities.love;
@@ -84,7 +81,6 @@ export const apiService = {
 
   getResults: async (_userId?: string) => {
     try {
-      // Endpoint belum tersedia
       return null;
     } catch (error) {
       console.error('Error fetching results:', error);
@@ -94,7 +90,6 @@ export const apiService = {
 
   saveFeedback: async (_feedbackData: unknown) => {
     try {
-      // Endpoint belum tersedia
       return { success: true };
     } catch (error) {
       console.error('Error saving feedback:', error);
