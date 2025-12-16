@@ -27,14 +27,9 @@ export const TextInput: React.FC<TextInputProps> = ({
         <label className="block text-slate-200 text-sm font-medium mb-3">
           Teks kamu
         </label>
-        <textarea
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder="Aku tidak tahu kenapa selalu aku yang disalahkan dan dijauhi"
-          className="w-full bg-slate-700/60 backdrop-blur-sm text-white rounded-xl p-4 min-h-[120px] border border-slate-600/50 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent placeholder-slate-400 resize-none transition-all duration-200 shadow-lg"
-          disabled={isLoading}
-        />
+        <div className="w-full bg-slate-700/60 backdrop-blur-sm text-white rounded-xl p-4 min-h-[120px] border border-slate-600/50 placeholder-slate-400 transition-all duration-200 shadow-lg">
+          {value || <span className="text-slate-400">Kalimat yang Anda Masukan..</span>}
+        </div>
       </div>
 
       <div className="flex items-center gap-3">
