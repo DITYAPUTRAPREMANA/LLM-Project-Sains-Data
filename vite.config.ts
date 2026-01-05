@@ -2,17 +2,14 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-declare const process: { env: Record<string, string | undefined> }
-
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: process.env.VITE_BASE_PATH || "/LLM-Project-Sains-Data",
   server: {
     proxy: {
       '/api': {
         target: 'http://api.sainsdata.randomflies.my.id',
         changeOrigin: true,
-        rewrite: (path: string) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, ''),
       }
     }
   }

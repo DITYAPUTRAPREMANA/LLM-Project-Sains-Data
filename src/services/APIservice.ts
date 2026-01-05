@@ -25,19 +25,8 @@ interface APIResponse {
   };
 }
 
-// Use proxy in development, direct URL in production
-const getApiBaseUrl = (): string => {
-  // In development, use proxy path
-  // In production, use full API URL
-  if (import.meta.env.DEV) {
-    return '/api';
-  }
-  // Use environment variable if available, otherwise use default API URL
-  return import.meta.env.VITE_API_URL || 'http://api.sainsdata.randomflies.my.id';
-};
-
 export const API_CONFIG = {
-  BASE_URL: getApiBaseUrl(),
+  BASE_URL: '/api',
   ENDPOINTS: {
     PREDICT: '/predict',
   }
